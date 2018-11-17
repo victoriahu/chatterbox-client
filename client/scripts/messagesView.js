@@ -3,16 +3,27 @@ var MessagesView = {
   $chats: $('#chats'),
 
   initialize: function() {
+    var populateMsgs = function(data) {
+      var results = data.results;
+      for (var i = 0; i < results.length; i++) {
+        Messages[results[i].objectId] = results[i];
+      } 
+      MessagesView.render(Messages);
+    }
+    Parse.readAll(populateMsgs, console.log);
   },
 
-  render: function() {
+  render: function(Messages) {
+    for (var key in Messages) {
+      MessagesView.renderMessage(Messages[key]);
+    }
   },
 
   renderMessage: function(message) {
     var msg = _.template(`
     <div class="chat">
-      <div class="username"><%= username %></div>
-      <div class="text"><%= text %></div>
+      <div class="username"><%- username %></div>
+      <div class="text"><%- text %></div>
     </div>
   `)
     MessagesView.$chats.append(msg(message));
@@ -41,3 +52,4 @@ var MessagesView = {
 // var compiled = _.template("hello: <%= name %>");
 // compiled({name: 'moe'});
 // => "hello: moe"
+//{results: [100]}
