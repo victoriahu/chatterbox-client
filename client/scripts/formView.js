@@ -8,8 +8,18 @@ var FormView = {
 
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
+    var message = {
+      username: App.username,
+      text: $('#message').val(),
+      roomname: 'test'
+    }
+      //   username: 'Mel Brooks',
+      //   text: 'Never underestimate the power of the Schwartz!',
+      //   roomname: 'lobby'
+      // };
     event.preventDefault();
-    Parse.create();
+    Parse.create(message, MessagesView.initialize, console.log);
+
   },
 
   setStatus: function(active) {

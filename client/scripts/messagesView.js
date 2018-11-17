@@ -4,6 +4,7 @@ var MessagesView = {
 
   initialize: function() {
     var populateMsgs = function(data) {
+      debugger;
       var results = data.results;
       for (var i = 0; i < results.length; i++) {
         Messages[results[i].objectId] = results[i];
@@ -20,6 +21,14 @@ var MessagesView = {
   },
 
   renderMessage: function(message) {
+    // if (message.username) {
+    //   message.username = message.username; 
+    // } else {
+    //   message.username = 'anonymous';
+    // };
+    message.username = message.username || 'anonymous';
+    message.text = message.text || '[blank]';
+    
     var msg = _.template(`
     <div class="chat">
       <div class="username"><%- username %></div>
@@ -30,7 +39,6 @@ var MessagesView = {
     // debugger;
     MessagesView.$chats.children()[0].querySelector(".username").addEventListener('click', Friends.toggleStatus);
   }
-
 };
 
 
