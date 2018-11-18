@@ -6,39 +6,25 @@ var MessagesView = {
     var populateMsgs = function(data) {
       debugger;
       var results = data.results;
-      for (var i = 0; i < results.length; i++) {
-        Messages[results[i].objectId] = results[i];
-      } 
-      MessagesView.render(Messages);
+      Messages.update(results);
+      MessagesView.render();
     }
     Parse.readAll(populateMsgs, console.log);
   },
 
-  render: function(Messages) {
-    for (var key in Messages) {
-      MessagesView.renderMessage(Messages[key]);
+  render: function() {
+    debugger;
+    var arr = [];
+    var items = Messages.items();
+    for (var key in items) {
+      arr.push(items[key]);
     }
-  },
-
-  renderMessage: function(message) {
-    // if (message.username) {
-    //   message.username = message.username; 
-    // } else {
-    //   message.username = 'anonymous';
-    // };
-    message.username = message.username || 'anonymous';
-    message.text = message.text || '[blank]';
-    
-    var msg = _.template(`
-    <div class="chat">
-      <div class="username"><%- username %></div>
-      <div class="text"><%- text %></div>
-    </div>
-  `)
-    MessagesView.$chats.append(msg(message));
-    // debugger;
-    MessagesView.$chats.children()[0].querySelector(".username").addEventListener('click', Friends.toggleStatus);
+    for (var i = arr.length - 1; i >= 0; i--) {
+      MessageView.render(arr[i]);
+    }
   }
+
+  
 };
 
 

@@ -18,8 +18,15 @@ var FormView = {
       //   roomname: 'lobby'
       // };
     event.preventDefault();
-    Parse.create(message, MessagesView.initialize, console.log);
+    var callback = function(metaData) {
+      _.extend(message, metaData); 
+      Messages.add(message , MessageView.render);
+    }
+    Parse.create(message, callback, console.log);
+    // if () {
 
+    // }
+    // MessagesView.render();
   },
 
   setStatus: function(active) {
